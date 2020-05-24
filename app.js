@@ -28,7 +28,7 @@ cardKinds.set("17", "https://source.unsplash.com/_wpce-AsLxk");
 cardKinds.set("18", "https://source.unsplash.com/q82BAzAWGTQ");
 cardKinds.set("19", "https://source.unsplash.com/HH4WBGNyltc");
 cardKinds.set("20", "https://source.unsplash.com/ZdnGBXc9DF8");
-const closeCardImage = "https://source.unsplash.com/SSKh-yijn9s";
+const closeCardImage = "images/background-card-behind.jpg";
 
 /* ターン制御 */
 let playing = 4; // 誰のターンか
