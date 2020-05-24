@@ -78,7 +78,7 @@ const clickCard = (card) => {
 
     // 前提処理
     preClick();
-    
+
     openCard(card);
 
     // 開いたカードの番号
@@ -114,12 +114,10 @@ const clickCard = (card) => {
 };
 
 const preClick = () => {
-    console.log("click:start");
     isProcessing = true;
 };
 
 const postClick = () => {
-    console.log("click:end");
     isProcessing = false;
 };
 
