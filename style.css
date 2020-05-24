@@ -83,3 +83,21 @@
     margin: 5%;
     text-align: center;
 }
+
+/* setting area */
+.setting-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 5%;
+}
+
+.input-area input {
+    align-content: center;
+}
+
+.apply-button {
+    width: 100px;
+    font-size: 1em;
+    margin: 5px;
+}

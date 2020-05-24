@@ -42,14 +42,18 @@ let isProcessing = false;
 /* DOM */
 const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
+const settingButton = document.querySelectorAll(".apply-button")[0];
 
 const app = () => {
     startup();
 
+    /* event */
     cards.forEach(card => {
         let img = card.getElementsByTagName("img").item(0);
         img.addEventListener("click", function(){clickCard(card)});
     });
+
+    settingButton.addEventListener("click", function () {setting()});
 };
 
 /* ゲームの初期設定　*/
@@ -211,6 +215,15 @@ const addPoint = (player) => {
 /* 得点を取得 */
 const getScore = (player) => {
     return player.getElementsByClassName("player-score")[0].textContent;
+};
+
+/* 画像の設定 */
+const setting = () => {
+    let inputs = document.querySelectorAll(".input-area input");
+    for (let i = 0; i < 20; i++) {
+        cardKinds.set((i+1).toString(), inputs[i].value);
+    }
+    console.log(cardKinds);
 };
 
 app();
