@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    margin: 1%;
 }
 
 /* game area */
@@ -17,7 +18,7 @@
     height: 80%;
     width: auto;
     background-repeat: no-repeat;
-    background-image: url("images/background-game-area.jpg");
+    background-image: url("images/background-game-area.png");
     flex: 4;
     display: flex;
     flex-direction: column;
@@ -60,7 +61,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-image: url("images/background-context-area.jpg");
+    background-image: url("images/background-context-area.png");
+    margin-left: 1%;
 }
 
 [class*="player--"] {
@@ -68,28 +70,17 @@
     width: 80%;
     height: 20%;
     flex: 1;
+    background-size: cover;
+    background-image: url("images/background-context-point-area.png");
 }
 
 .player-name {
+    margin: 10%;
     font-size: 20px;
-    alignment: center;
 }
 
 .player-score {
-}
-
-.player--1 {
-    background-color: lightgoldenrodyellow;
-}
-
-.player--2 {
-    background-color: lightblue;
-}
-
-.player--3 {
-    background-color: lightseagreen;
-}
-
-.player--4 {
-    background-color: lightcyan;
+    font-size: 50px;
+    margin: 10%;
+    text-align: center;
 }
