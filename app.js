@@ -36,6 +36,9 @@ let openFirstCardNumber = 0; // 1枚目に開いたカードの番号（１枚�
 let countTotalOpenCard = 0;
 let gameFinished = false;
 
+/* 同時操作制御 */
+let isProcessing = false;
+
 /* DOM */
 const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
@@ -62,14 +65,20 @@ const startup = () => {
 
 /* カードクリック */
 const clickCard = (card) => {
+    if (isProcessing) return;
+
     // ゲーム終了後は更新できない
-    if (gameFinished) return;
+    if (gameFinished) {
+        return;
+    }
 
     let status = card.getAttribute("status");
-
     // すでに開かれているカードの場合は何もしない
     if (status === statusFinished || status === statusOpen) return;
 
+    // 前提処理
+    preClick();
+    
     openCard(card);
 
     // 開いたカードの番号
@@ -78,17 +87,19 @@ const clickCard = (card) => {
     // 1枚目であれば、何を開いたか保存して終了
     if (openFirstCardNumber === 0) {
         openFirstCardNumber = openCardNumber;
+        postClick();
         return;
     }
 
     // 種類が一致している場合
-    if (kindOfCards[openCardNumber] === kindOfCards[openFirstCardNumber]) {
+    if (kindOfCards[openCardNumber-1] === kindOfCards[openFirstCardNumber-1]) {
         correct(card);
         // 終了判定
         if (countTotalOpenCard === 40) {
             gameFinished = true;
             alert("優勝は "+judgeWinner()+" でした！");
         }
+        postClick();
         return;
     }
 
@@ -97,14 +108,26 @@ const clickCard = (card) => {
         closeCard(card);
         closeCard(cards[openFirstCardNumber-1]);
         mistake();
+        postClick();
     }, 1000); // 3秒待ってから裏返す
+
+};
+
+const preClick = () => {
+    console.log("click:start");
+    isProcessing = true;
+};
+
+const postClick = () => {
+    console.log("click:end");
+    isProcessing = false;
 };
 
 /* カードを開く */
 const openCard = (card) => {
     let img = card.getElementsByTagName("img").item(0);
     let cardNumber = Number(card.getAttribute("card-number"));
-    img.src = cardKinds.get(kindOfCards[cardNumber].toString());
+    img.src = cardKinds.get(kindOfCards[cardNumber-1].toString());
     card.setAttribute("status", statusOpen);
 };
 
