@@ -44,6 +44,9 @@ const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
 
+/* web storage */
+let storage = localStorage;
+
 const app = () => {
     startup();
 
@@ -53,7 +56,7 @@ const app = () => {
         img.addEventListener("click", function(){clickCard(card)});
     });
 
-    settingButton.addEventListener("click", function () {setting()});
+    settingButton.addEventListener("click", function () {setting();saveSetting();});
 };
 
 /* ゲームの初期設定　*/
@@ -63,6 +66,7 @@ const startup = () => {
         kindOfCards.push(key);
         }
     );
+    loadSetting();
     shuffleCards(kindOfCards);
     proceedPlayer();
 };
@@ -221,9 +225,27 @@ const getScore = (player) => {
 const setting = () => {
     let inputs = document.querySelectorAll(".input-area input");
     for (let i = 0; i < 20; i++) {
-        cardKinds.set((i+1).toString(), inputs[i].value);
+        if (inputs[i].value !== "") {
+            cardKinds.set((i+1).toString(), inputs[i].value);
+        }
     }
-    console.log(cardKinds);
+    alert("反映完了しました");
+};
+
+/* 画像のURLを保存 */
+const saveSetting = () => {
+    for (let i = 0; i < 20; i++) {
+        localStorage.setItem("cardKind"+i.toString(), cardKinds.get((i+1).toString()));
+    }
+};
+
+/* 画像のURLをローカルストレージから復元 */
+const loadSetting = () => {
+    for (let i = 0; i < 20; i++) {
+        if (localStorage.getItem("cardKind"+i.toString()) !== null) {
+            cardKinds.set((i+1).toString(), localStorage.getItem("cardKind"+i.toString()));
+        }
+    }
 };
 
 app();
