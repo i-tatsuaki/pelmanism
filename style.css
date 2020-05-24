@@ -17,7 +17,6 @@
 .game-area {
     height: 80%;
     width: auto;
-    background-repeat: no-repeat;
     background-image: url("images/background-game-area.png");
     flex: 4;
     display: flex;
