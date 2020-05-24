@@ -177,6 +177,7 @@ const judgeWinner = () => {
     let player3Score = Number(getScore(players[2]));
     let player4Score = Number(getScore(players[3]));
 
+    // 同点は順番が速い方が勝利
     if (player1Score >= player2Score) {
         if (player1Score >= player3Score) {
             if (player1Score >= player4Score) {
