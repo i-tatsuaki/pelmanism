@@ -52,8 +52,7 @@ const app = () => {
 
     /* event */
     cards.forEach(card => {
-        let img = card.getElementsByTagName("img").item(0);
-        img.addEventListener("click", function(){clickCard(card)});
+        card.addEventListener("click", function(){clickCard(card)});
     });
 
     settingButton.addEventListener("click", function () {setting();saveSetting();});
@@ -87,7 +86,12 @@ const clickCard = (card) => {
     // 前提処理
     preClick();
 
+    card.addEventListener("load", loadCard);
     openCard(card);
+};
+
+const loadCard = (event) => {
+    const card = event.target;
 
     // 開いたカードの番号
     let openCardNumber = Number(card.getAttribute("card-number"));
@@ -95,6 +99,7 @@ const clickCard = (card) => {
     // 1枚目であれば、何を開いたか保存して終了
     if (openFirstCardNumber === 0) {
         openFirstCardNumber = openCardNumber;
+        card.removeEventListener("load", loadCard);
         postClick();
         return;
     }
@@ -116,9 +121,9 @@ const clickCard = (card) => {
         closeCard(card);
         closeCard(cards[openFirstCardNumber-1]);
         mistake();
+        card.removeEventListener("load", loadCard);
         postClick();
     }, 1000); // 3秒待ってから裏返す
-
 };
 
 const preClick = () => {
@@ -131,16 +136,14 @@ const postClick = () => {
 
 /* カードを開く */
 const openCard = (card) => {
-    let img = card.getElementsByTagName("img").item(0);
     let cardNumber = Number(card.getAttribute("card-number"));
-    img.src = cardKinds.get(kindOfCards[cardNumber-1].toString());
+    card.src = cardKinds.get(kindOfCards[cardNumber-1].toString());
     card.setAttribute("status", statusOpen);
 };
 
 /* カードを裏返す */
 const closeCard = (card) => {
-    let img = card.getElementsByTagName("img").item(0);
-    img.src = closeCardImage;
+    card.src = closeCardImage;
     card.setAttribute("status", statusClose);
 };
 
