@@ -35,7 +35,7 @@
     align-items: center;
 }
 
-[class*="card--"] {
+[class*="card-area"] {
     height: 80%;
     width: 9%;
     border: 2px solid black;
@@ -45,7 +45,7 @@
     justify-content: center;
 }
 
-[class*="card--"] img {
+[class*="card--"] {
     width: auto;
     height: auto;
     max-width: 100%;
