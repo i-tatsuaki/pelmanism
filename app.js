@@ -44,8 +44,8 @@ const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
 
-/* web storage */
-let storage = localStorage;
+/* modal area */
+const modalArea = document.getElementById('modalArea');
 
 const app = () => {
     startup();
@@ -57,6 +57,11 @@ const app = () => {
 
     settingButton.addEventListener("click", function () {setting();saveSetting();});
 };
+
+/* 時間設定 */
+const cardOpenTime = 2000;
+const modalOpenTime = 1500;
+
 
 /* ゲームの初期設定　*/
 const startup = () => {
@@ -100,9 +105,14 @@ const loadCard = (event) => {
     if (openFirstCardNumber === 0) {
         openFirstCardNumber = openCardNumber;
         card.removeEventListener("load", loadCard);
+        toggleModal(card.src);
+        setTimeout(() => {toggleModal(card.src)}, modalOpenTime);
         postClick();
         return;
     }
+
+    toggleModal(card.src);
+    setTimeout(() => {toggleModal(card.src)}, modalOpenTime);
 
     // 種類が一致している場合
     if (kindOfCards[openCardNumber-1] === kindOfCards[openFirstCardNumber-1]) {
@@ -123,7 +133,7 @@ const loadCard = (event) => {
         mistake();
         card.removeEventListener("load", loadCard);
         postClick();
-    }, 1000); // 3秒待ってから裏返す
+    }, cardOpenTime);
 };
 
 const preClick = () => {
@@ -249,6 +259,14 @@ const loadSetting = () => {
             cardKinds.set((i+1).toString(), localStorage.getItem("cardKind"+i.toString()));
         }
     }
+};
+
+const toggleModal = (src) => {
+    const modalImage = modalArea.getElementsByClassName("modalImage");
+    console.log(modalImage);
+    console.log(modalImage.src);
+    modalImage[0].src = src;
+    modalArea.classList.toggle('is-show');
 };
 
 app();
