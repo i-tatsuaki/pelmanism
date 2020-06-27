@@ -94,7 +94,7 @@ html, body{
 }
 
 /* show big image area */
-.showBigImageArea {
+.show-big-image-area {
     visibility: hidden; /* displayではなくvisibility */
     opacity : 0;
     position: fixed;
@@ -109,13 +109,13 @@ html, body{
     justify-content: center;
 }
 
-.showBigImageBg {
+.show-big-image-bg {
     width: 100%;
     height: 100%;
     background-color: rgba(30,30,30,0.9);
 }
 
-.showBigImageWrapper {
+.show-big-image-wrapper {
     position: absolute;
     max-width: 50%;
     max-height: 50%;
@@ -124,19 +124,13 @@ html, body{
     justify-content: center;
 }
 
-.showBigImage {
+.show-big-image {
     width: auto;
     height: auto;
     max-width: 50%;
     max-height: 50%;
 }
 
-.closeModal {
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
-    cursor: pointer;
-}
 
 /* モーダル表示用クラス */
 .is-show {

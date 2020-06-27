@@ -48,7 +48,7 @@ const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
 
 /* 拡大画像表示ポップアップ */
-const showBigImageArea = document.getElementById('showBigImageArea');
+const showBigImageArea = document.getElementById('show-big-image-area');
 
 /* 画面初期イベント設定 */
 settingButton.addEventListener("click", function () {setting();saveSetting();});
@@ -192,7 +192,7 @@ const correct = (card) => {
 
 /* 拡大画像表示ポップアップ */
 const toggleModal = (src) => {
-    const showBigImage = showBigImageArea.getElementsByClassName("showBigImage");
+    const showBigImage = showBigImageArea.getElementsByClassName("show-big-image");
     showBigImage[0].src = src;
     showBigImageArea.classList.toggle('is-show');
 };
