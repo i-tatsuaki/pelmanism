@@ -51,7 +51,10 @@ let isSecondCard = false;
 const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
-const settingInputs = document.querySelectorAll(".setting-input")
+const loadButton = document.querySelectorAll(".load-button")[0];
+const saveButton = document.querySelectorAll(".save-button")[0];
+const settingInputs = document.querySelectorAll(".setting-input");
+const imageSetNameInput = document.querySelectorAll(".image-set-name-input")[0];
 const settingImages = document.querySelectorAll("[class*='setting-img']");
 
 
@@ -59,7 +62,9 @@ const settingImages = document.querySelectorAll("[class*='setting-img']");
 const showBigImageArea = document.getElementById('show-big-image-area');
 
 /* 画面初期イベント設定 */
-settingButton.addEventListener("click", function () {setting();saveSetting();});
+settingButton.addEventListener("click", function () {setting();});
+loadButton.addEventListener("click", function () {loadImages();});
+saveButton.addEventListener("click", function () {saveImages()});
 for(let i = 0; i < 20; i++) {
     settingInputs[i].addEventListener("input", () => {
         settingImages[i].src = settingInputs[i].value;
@@ -89,7 +94,7 @@ const startup = () => {
         kindOfCards.push(key);
         }
     );
-    loadSetting();
+    setImages();
     shuffleCards(kindOfCards);
 
     playing = numberOfPlayer;
@@ -302,17 +307,28 @@ const setting = () => {
 };
 
 /* 画像のURLを保存 */
-const saveSetting = () => {
+const saveImages = () => {
+    let inputs = document.querySelectorAll(".input-area input");
     for (let i = 0; i < 20; i++) {
-        localStorage.setItem("cardKind"+i.toString(), cardKinds.get((i+1).toString()));
+        localStorage.setItem(imageSetNameInput.value+"cardKind"+i.toString(), inputs[i].value);
     }
 };
 
-/* 画像のURLをローカルストレージから復元 */
-const loadSetting = () => {
+/* 画像のURLを読込 */
+const loadImages = () => {
+    let inputs = document.querySelectorAll(".input-area input");
     for (let i = 0; i < 20; i++) {
-        if (localStorage.getItem("cardKind"+i.toString()) !== null) {
-            cardKinds.set((i+1).toString(), localStorage.getItem("cardKind"+i.toString()));
+        inputs[i].value = localStorage.getItem(imageSetNameInput.value+"cardKind"+i.toString());
+        settingImages[i].src = settingInputs[i].value;
+    }
+};
+
+/* 画像のURLを設定 */
+const setImages = () => {
+    let inputs = document.querySelectorAll(".input-area input");
+    for (let i = 0; i < 20; i++) {
+        if (inputs[i].value !== null) {
+            cardKinds.set((i+1).toString(), inputs[i].value);
         }
     }
 };
