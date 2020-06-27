@@ -30,6 +30,9 @@ cardKinds.set("19", "https://source.unsplash.com/HH4WBGNyltc");
 cardKinds.set("20", "https://source.unsplash.com/ZdnGBXc9DF8");
 const closeCardImage = "images/card-behind.png";
 
+/* プレイ人数 */
+let numberOfPlayer = 4;
+
 /* ターン制御 */
 let playing = 4; // 誰のターンか
 let openFirstCardNumber = 0; // 1枚目に開いたカードの番号（１枚目を開くときは0が入っている）
@@ -47,6 +50,11 @@ const settingButton = document.querySelectorAll(".apply-button")[0];
 /* modal area */
 const modalArea = document.getElementById('modalArea');
 
+/* 画面初期イベント設定 */
+settingButton.addEventListener("click", function () {setting();saveSetting();});
+
+
+/* ゲーム開始処理 */
 const app = () => {
     startup();
 
@@ -54,8 +62,6 @@ const app = () => {
     cards.forEach(card => {
         card.addEventListener("click", function(){clickCard(card)});
     });
-
-    settingButton.addEventListener("click", function () {setting();saveSetting();});
 };
 
 /* 時間設定 */
@@ -72,6 +78,8 @@ const startup = () => {
     );
     loadSetting();
     shuffleCards(kindOfCards);
+
+    playing = numberOfPlayer;
     proceedPlayer();
 };
 
@@ -186,7 +194,7 @@ const correct = (card) => {
 const proceedPlayer = () => {
     let playerName = players[playing-1].getElementsByClassName("player-name")[0];
     playerName.textContent = playerName.textContent.replace("★", "");
-    playing = (playing % 4) + 1;
+    playing = (playing % numberOfPlayer) + 1;
     let nextPlayerName = players[playing-1].getElementsByClassName("player-name")[0];
     nextPlayerName.textContent = "★" + nextPlayerName.textContent;
 };
@@ -234,7 +242,10 @@ const getScore = (player) => {
     return player.getElementsByClassName("player-score")[0].textContent;
 };
 
-/* 画像の設定 */
+
+/********** 設定系 **********/
+
+/* 設定 */
 const setting = () => {
     let inputs = document.querySelectorAll(".input-area input");
     for (let i = 0; i < 20; i++) {
@@ -242,7 +253,9 @@ const setting = () => {
             cardKinds.set((i+1).toString(), inputs[i].value);
         }
     }
+    setNumberOfPlayer();
     alert("反映完了しました");
+    app();
 };
 
 /* 画像のURLを保存 */
@@ -261,12 +274,15 @@ const loadSetting = () => {
     }
 };
 
+/* 人数の設定 */
+const setNumberOfPlayer = () => {
+    numberOfPlayer = document.getElementsByName("number-of-player")[0].value;
+}
+
+
 const toggleModal = (src) => {
     const modalImage = modalArea.getElementsByClassName("modalImage");
-    console.log(modalImage);
-    console.log(modalImage.src);
     modalImage[0].src = src;
     modalArea.classList.toggle('is-show');
 };
 
-app();
