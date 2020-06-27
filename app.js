@@ -66,8 +66,9 @@ const app = () => {
 };
 
 /* 時間設定 */
-const cardOpenTime = 2000;
-const showBigImageOpenTime = 1500;
+let cardOpenTime;
+let showBigImageOpenTime;
+let isWaitClick;
 
 
 /* ゲームの初期設定　*/
@@ -82,6 +83,7 @@ const startup = () => {
 
     playing = numberOfPlayer;
     setPlayers();
+    setWaitTime();
     proceedPlayer();
 };
 
@@ -293,4 +295,12 @@ const loadSetting = () => {
 /* 人数の設定 */
 const setNumberOfPlayer = () => {
     numberOfPlayer = document.getElementsByName("number-of-player")[0].value;
+}
+
+/* 待ち時間の設定 */
+const setWaitTime = () => {
+    const waitValue = document.getElementsByName("wait-time")[0].value;
+    if (waitValue === 0) isWaitClick = true;
+    showBigImageOpenTime = Number(waitValue);
+    cardOpenTime = showBigImageOpenTime + 500;
 }
