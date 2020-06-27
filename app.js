@@ -51,13 +51,20 @@ let isSecondCard = false;
 const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
+const settingInputs = document.querySelectorAll(".setting-input")
+const settingImages = document.querySelectorAll("[class*='setting-img']");
+
 
 /* 拡大画像表示ポップアップ */
 const showBigImageArea = document.getElementById('show-big-image-area');
 
 /* 画面初期イベント設定 */
 settingButton.addEventListener("click", function () {setting();saveSetting();});
-
+for(let i = 0; i < 20; i++) {
+    settingInputs[i].addEventListener("input", () => {
+        settingImages[i].src = settingInputs[i].value;
+    })
+}
 
 /* ゲーム開始処理 */
 const app = () => {
