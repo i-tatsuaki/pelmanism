@@ -230,11 +230,9 @@ const toggleModal = (src) => {
 
 /* プレイヤーを交代 */
 const proceedPlayer = () => {
-    let playerName = players[playing-1].getElementsByClassName("player-name")[0];
-    playerName.textContent = playerName.textContent.replace("★", "");
+    players[playing-1].classList.remove("turn-player");
     playing = (playing % numberOfPlayer) + 1;
-    let nextPlayerName = players[playing-1].getElementsByClassName("player-name")[0];
-    nextPlayerName.textContent = "★" + nextPlayerName.textContent;
+    players[playing-1].classList.add("turn-player");
 };
 
 /* 1位を判定する */
