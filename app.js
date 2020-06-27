@@ -190,6 +190,13 @@ const correct = (card) => {
     countTotalOpenCard = countTotalOpenCard + 2;
 }
 
+/* 拡大画像表示ポップアップ */
+const toggleModal = (src) => {
+    const modalImage = modalArea.getElementsByClassName("modalImage");
+    modalImage[0].src = src;
+    modalArea.classList.toggle('is-show');
+};
+
 /* プレイヤーを交代 */
 const proceedPlayer = () => {
     let playerName = players[playing-1].getElementsByClassName("player-name")[0];
@@ -278,11 +285,3 @@ const loadSetting = () => {
 const setNumberOfPlayer = () => {
     numberOfPlayer = document.getElementsByName("number-of-player")[0].value;
 }
-
-
-const toggleModal = (src) => {
-    const modalImage = modalArea.getElementsByClassName("modalImage");
-    modalImage[0].src = src;
-    modalArea.classList.toggle('is-show');
-};
-
