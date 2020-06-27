@@ -93,8 +93,8 @@ html, body{
     margin: 5px;
 }
 
-/* modal area */
-.modalArea {
+/* show big image area */
+.showBigImageArea {
     visibility: hidden; /* displayではなくvisibility */
     opacity : 0;
     position: fixed;
@@ -109,13 +109,13 @@ html, body{
     justify-content: center;
 }
 
-.modalBg {
+.showBigImageBg {
     width: 100%;
     height: 100%;
     background-color: rgba(30,30,30,0.9);
 }
 
-.modalWrapper {
+.showBigImageWrapper {
     position: absolute;
     max-width: 50%;
     max-height: 50%;
@@ -124,7 +124,7 @@ html, body{
     justify-content: center;
 }
 
-.modalImage {
+.showBigImage {
     width: auto;
     height: auto;
     max-width: 50%;

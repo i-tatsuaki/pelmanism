@@ -47,8 +47,8 @@ const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
 const settingButton = document.querySelectorAll(".apply-button")[0];
 
-/* modal area */
-const modalArea = document.getElementById('modalArea');
+/* 拡大画像表示ポップアップ */
+const showBigImageArea = document.getElementById('showBigImageArea');
 
 /* 画面初期イベント設定 */
 settingButton.addEventListener("click", function () {setting();saveSetting();});
@@ -66,7 +66,7 @@ const app = () => {
 
 /* 時間設定 */
 const cardOpenTime = 2000;
-const modalOpenTime = 1500;
+const showBigImageOpenTime = 1500;
 
 
 /* ゲームの初期設定　*/
@@ -114,13 +114,13 @@ const loadCard = (event) => {
         openFirstCardNumber = openCardNumber;
         card.removeEventListener("load", loadCard);
         toggleModal(card.src);
-        setTimeout(() => {toggleModal(card.src)}, modalOpenTime);
+        setTimeout(() => {toggleModal(card.src)}, showBigImageOpenTime);
         postClick();
         return;
     }
 
     toggleModal(card.src);
-    setTimeout(() => {toggleModal(card.src)}, modalOpenTime);
+    setTimeout(() => {toggleModal(card.src)}, showBigImageOpenTime);
 
     // 種類が一致している場合
     if (kindOfCards[openCardNumber-1] === kindOfCards[openFirstCardNumber-1]) {
@@ -192,9 +192,9 @@ const correct = (card) => {
 
 /* 拡大画像表示ポップアップ */
 const toggleModal = (src) => {
-    const modalImage = modalArea.getElementsByClassName("modalImage");
-    modalImage[0].src = src;
-    modalArea.classList.toggle('is-show');
+    const showBigImage = showBigImageArea.getElementsByClassName("showBigImage");
+    showBigImage[0].src = src;
+    showBigImageArea.classList.toggle('is-show');
 };
 
 /* プレイヤーを交代 */
