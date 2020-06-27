@@ -43,6 +43,10 @@ let gameFinished = false;
 /* 同時操作制御 */
 let isProcessing = false;
 
+/* 選んでいるカード (TODO ローカルに持って行きたい) */
+let card;
+let isSecondCard = false;
+
 /* DOM */
 const cards = document.querySelectorAll("[class*='card--']");
 const players = document.querySelectorAll("[class*='player--']");
@@ -66,9 +70,9 @@ const app = () => {
 };
 
 /* 時間設定 */
-let cardOpenTime;
+let cardOpenTime = 500;
 let showBigImageOpenTime;
-let isWaitClick;
+let isWaitClick = false;
 
 
 /* ゲームの初期設定　*/
@@ -115,23 +119,37 @@ const clickCard = (card) => {
 };
 
 const loadCard = (event) => {
-    const card = event.target;
-
-    // 開いたカードの番号
-    let openCardNumber = Number(card.getAttribute("card-number"));
+    card = event.target;
+    isSecondCard = !(openFirstCardNumber === 0);
 
     // 1枚目であれば、何を開いたか保存して終了
-    if (openFirstCardNumber === 0) {
-        openFirstCardNumber = openCardNumber;
+    if (!isSecondCard) {
+        openFirstCardNumber = Number(card.getAttribute("card-number"));
         card.removeEventListener("load", loadCard);
         toggleModal(card.src);
-        setTimeout(() => {toggleModal(card.src)}, showBigImageOpenTime);
+        if (!isWaitClick) setTimeout(() => {
+            toggleModal(card.src);
+        }, showBigImageOpenTime);
         postClick();
         return;
     }
 
+    // 2枚目の場合
     toggleModal(card.src);
-    setTimeout(() => {toggleModal(card.src)}, showBigImageOpenTime);
+    isSecondCard = true;
+
+    if (!isWaitClick) {setTimeout(() => {
+            toggleModal(card.src);
+            openSecondCardLogic();
+        }, showBigImageOpenTime)
+    }
+};
+
+const openSecondCardLogic = () => {
+    if (!isSecondCard) return;
+
+    // 開いたカードの番号
+    let openCardNumber = Number(card.getAttribute("card-number"));
 
     // 種類が一致している場合
     if (kindOfCards[openCardNumber-1] === kindOfCards[openFirstCardNumber-1]) {
@@ -141,6 +159,7 @@ const loadCard = (event) => {
             gameFinished = true;
             alert("優勝は "+judgeWinner()+" でした！");
         }
+        isSecondCard = false;
         postClick();
         return;
     }
@@ -151,9 +170,10 @@ const loadCard = (event) => {
         closeCard(cards[openFirstCardNumber-1]);
         mistake();
         card.removeEventListener("load", loadCard);
+        isSecondCard = false;
         postClick();
     }, cardOpenTime);
-};
+}
 
 const preClick = () => {
     isProcessing = true;
@@ -171,9 +191,9 @@ const openCard = (card) => {
 };
 
 /* カードを裏返す */
-const closeCard = (card) => {
-    card.src = closeCardImage;
-    card.setAttribute("status", statusClose);
+const closeCard = (targetCard) => {
+    targetCard.src = closeCardImage;
+    targetCard.setAttribute("status", statusClose);
 };
 
 /* カードシャッフル */
@@ -300,7 +320,10 @@ const setNumberOfPlayer = () => {
 /* 待ち時間の設定 */
 const setWaitTime = () => {
     const waitValue = document.getElementsByName("wait-time")[0].value;
-    if (waitValue === 0) isWaitClick = true;
+    if (waitValue === "0") {
+        isWaitClick = true;
+        showBigImageArea.addEventListener("click", () => toggleModal(""));
+        showBigImageArea.addEventListener("click", openSecondCardLogic);
+    }
     showBigImageOpenTime = Number(waitValue);
-    cardOpenTime = showBigImageOpenTime + 500;
 }
