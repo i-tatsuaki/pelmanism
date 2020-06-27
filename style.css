@@ -8,6 +8,10 @@ html, body{
     background-color: #FEC7D7
 }
 
+p {
+    margin: 0 0 0 0;
+}
+
 .app {
     height: 100%;
     display: flex;
@@ -76,15 +80,50 @@ html, body{
 }
 
 /* setting area */
+.setting-modal {
+    visibility: display;
+    opacity : 1;
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.setting-area-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30,30,30,0.9);
+}
+
 .setting-area {
+    border-radius: 10px;
+    padding: 1%;
+    position: absolute;
+    width: 80%;
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin: 5% ;
+    justify-content: start;
+    background-color: #e2ffff;
+}
+
+.card-img-setting-area {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .input-area input {
     align-content: center;
+}
+
+.apply-button-area {
+    align-self: end;
 }
 
 .apply-button {
@@ -95,10 +134,10 @@ html, body{
 
 /* show big image area */
 .show-big-image-area {
-    visibility: hidden; /* displayではなくvisibility */
+    visibility: hidden;
     opacity : 0;
     position: fixed;
-    z-index: 10; /* サイトによってここの数値は調整 */
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100%;
@@ -136,4 +175,9 @@ html, body{
 .is-show {
     visibility: visible;
     opacity : 1;
+}
+
+.is-hidden {
+    visibility: hidden;
+    opacity : 0;
 }

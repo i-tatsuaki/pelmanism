@@ -31,10 +31,11 @@ cardKinds.set("20", "https://source.unsplash.com/ZdnGBXc9DF8");
 const closeCardImage = "images/card-behind.png";
 
 /* プレイ人数 */
-let numberOfPlayer = 4;
+let numberOfPlayer;
+let maxNumberOfPlayer = 4;
 
 /* ターン制御 */
-let playing = 4; // 誰のターンか
+let playing; // 誰のターンか
 let openFirstCardNumber = 0; // 1枚目に開いたカードの番号（１枚目を開くときは0が入っている）
 let countTotalOpenCard = 0;
 let gameFinished = false;
@@ -80,8 +81,16 @@ const startup = () => {
     shuffleCards(kindOfCards);
 
     playing = numberOfPlayer;
+    setPlayers();
     proceedPlayer();
 };
+
+/* プレイヤー人数をゲームに反映 */
+const setPlayers = () => {
+    for(let i = numberOfPlayer; i < maxNumberOfPlayer; i++) {
+        players[i].remove();
+    }
+}
 
 /* カードクリック */
 const clickCard = (card) => {
@@ -261,7 +270,7 @@ const setting = () => {
         }
     }
     setNumberOfPlayer();
-    alert("反映完了しました");
+    document.getElementById("setting-modal").classList.toggle('is-hidden')
     app();
 };
 
