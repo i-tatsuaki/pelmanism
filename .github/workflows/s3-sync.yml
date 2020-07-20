@@ -28,4 +28,4 @@ jobs:
           aws s3 cp ./index.html s3://$S3_UPLOAD_BUCKET/ --quiet
           aws s3 cp ./app.js s3://$S3_UPLOAD_BUCKET/ --quiet
           aws s3 cp ./style.css s3://$S3_UPLOAD_BUCKET/ --quiet
-          aws s3 cp ./images  s3://$S3_UPLOAD_BUCKET/ --quiet --recursive
+          aws s3 cp ./images  s3://$S3_UPLOAD_BUCKET/images/ --quiet --recursive
